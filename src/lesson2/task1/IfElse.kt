@@ -1,8 +1,9 @@
-@file:Suppress("UNUSED_PARAMETER")
+@file:Suppress("UNUSED_PARAMETER", "UNREACHABLE_CODE")
 
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.PI
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -63,7 +64,17 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    val s: Unit = if (age % 10 >= 2 && age % 10 <= 4 && age / 10 != 1)
+        return "$age года"
+    else if (age == 111)
+        return "$age лет"
+    else if (age % 10 == 1 && age / 10 != 1)
+        return "$age год"
+    else
+        return "$age лет"
+
+}
 
 /**
  * Простая
@@ -76,7 +87,21 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    var s1 = t1 * v1;
+    var s2 = t2 * v2;
+    var s3 = t3 * v3;
+    var shalf = (s1 + s2 + s3) / 2;
+    var thalf: Double
+
+    if (shalf <= s1)
+        return shalf / v1
+    else if (shalf > s1 && shalf <= s1 + s2)
+        return t1 + (shalf - s1) / v2
+    else
+        return t1 + t2 + (shalf - s1 - s2) / v3
+}
+
 
 /**
  * Простая
@@ -91,7 +116,15 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    if ((kingX == rookX1 || kingY == rookY1) && ((kingX != rookX2 && kingY != rookY2)))
+        return 1
+    else if ((kingX != rookX1 && kingY != rookY1) && (kingX == rookX2 || kingY == rookY2))
+        return 2
+    else if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2))
+        return 3
+    else return 0
+}
 
 /**
  * Простая
@@ -104,10 +137,17 @@ fun whichRookThreatens(
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
 fun rookOrBishopThreatens(
-    kingX: Int, kingY: Int,
-    rookX: Int, rookY: Int,
-    bishopX: Int, bishopY: Int
+    kingX: Int, kingY: Int, rookX: Int, rookY: Int, bishopX: Int, bishopY: Int
 ): Int = TODO()
+
+//    if ((rookX % kingX==0 || rookY % kingY==0) || ((bishopX % kingX!=0 && bishopY % kingY!=0)))
+//        return 1
+//    else if ((rookX % kingX!=0 && rookY % kingY!=0) && (bishopX % kingX ==0 || bishopY % kingY==0))
+//        return 2
+//    else if ((rookX % kingX==0 || rookY % kingY==0) && (bishopX % kingX==0 || bishopY % kingY==0))
+//        return 3
+//    else return 0
+//}
 
 /**
  * Простая
@@ -117,7 +157,18 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    var cosC: Double = ((a * a + b * b - c * c) / (2.0 * a * b)) * 180 / PI
+    var cosA: Double = ((a * a - b * b + c * c) / (2.0 * a * c)) * 180 / PI
+    var cosB: Double = ((-(a * a) + b * b + c * c)) / (2.0 * c * b) * 180 / PI
+    if ((a + b <= c) || (a + c <= b) || (b + c <= a))
+        return -1 // нет
+    else if ((cosC < 0.0) || (cosA < 0.0) || (cosB < 0.0)) //
+        return 2
+    else if ((cosC == 0.0) || (cosA == 0.0) || (cosB == 0.0)) //прямоугольный
+        return 1
+    else return 0
+}
 
 /**
  * Средняя
